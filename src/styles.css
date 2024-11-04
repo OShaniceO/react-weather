@@ -1,0 +1,133 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(-225deg, #e3fdf5 0%, #ffe6fa 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.search-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.box {
+  display: flex;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: rgba(3, 9, 107, 0.56) 0px 4px 8px;
+}
+
+#search-input {
+  padding: 10px;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  border-radius: 4px 0 0 4px;
+  outline: none;
+}
+
+#button {
+  background-image: linear-gradient(#0dccea, #0d70ea);
+  border: 0;
+  border-radius: 0 4px 4px 0;
+  box-shadow: rgba(0, 0, 0, 0.3) 0 5px 15px;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  font-family: Montserrat, sans-serif;
+  font-size: 0.9em;
+  padding: 10px 15px;
+  text-align: center;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.current {
+  display: flex;
+  justify-content: center;
+  font-size: 60px;
+  margin-top: 20px;
+}
+
+#weather-icon {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+#icon-image {
+  width: 100px;
+  height: 100px;
+}
+
+.cont {
+  box-shadow: rgba(3, 9, 107, 0.56) 0px 22px 70px 4px;
+  border-radius: 20px;
+  padding: 20px;
+  width: 650px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.forecast {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.forecast-day {
+  text-align: center;
+  margin: 0 10px;
+}
+
+.forecast-day img {
+  width: 50px;
+  height: 50px;
+  display: block;
+  margin: 0 auto;
+}
+
+footer {
+  text-align: center;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.blue {
+  color: blue;
+}
+
+.forecast-day p {
+  display: flex;
+  justify-content: center;
+}
+
+.forecast-day .min-temp {
+  color: blue;
+  opacity: 0.7;
+  margin-right: 5px;
+}
+
+.forecast-day .max-temp {
+  color: blue;
+  opacity: 1;
+}
+
+#temperature em {
+  font-size: 0.5em;
+}
