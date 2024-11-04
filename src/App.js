@@ -25,9 +25,12 @@ function App() {
       <footer>
         Coded By Shanice Jones on{" "}
         <a href="https://www.shecodes.io/">SheCodes</a> and is on{" "}
-        <a href="https://github.com/OShaniceO/Weather-App-Project">GitHub</a>{" "}
-        and hosted on{" "}
-        <a href="https://curious-truffle-2c4059.netlify.app/">Netlify</a>.
+        <a href="https://github.com/OShaniceO/react-weather">GitHub</a> and
+        hosted on{" "}
+        <a href="https://app.netlify.com/sites/endearing-tanuki-7c9677/overview">
+          Netlify
+        </a>
+        .
       </footer>
     </div>
   );
