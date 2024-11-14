@@ -88,11 +88,13 @@ body {
   justify-content: space-between;
   width: 100%;
   margin-top: 20px;
+  flex-wrap: wrap; 
 }
 
 .forecast-day {
   text-align: center;
   margin: 0 10px;
+  width: 120px; 
 }
 
 .forecast-day img {

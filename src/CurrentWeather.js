@@ -1,37 +1,58 @@
 import React from "react";
 
-function CurrentWeather({ city, temperature }) {
+function CurrentWeather({
+  city,
+  temperatureC,
+  temperatureF,
+  isCelsius,
+  humidity,
+  windspeed,
+  currentDateTime,
+  weatherIcon,
+}) {
   return (
     <div>
       <h1 className="bebas-neue-regular">
-        <strong>{city}</strong> {}
+        <strong>{city}</strong>
       </h1>
+      <br />
       <div>
-        <p className="main">Friday 9:43pm</p>
+        <p className="main">
+          <strong>{currentDateTime}</strong>{" "}
+          {}
+        </p>
+
         <p className="main-2">
           Humidity:{" "}
           <span className="blue">
-            <strong>50%</strong>
+            <strong>{humidity}</strong>
           </span>
-          , Wind:{" "}
+          Wind:{" "}
           <span className="blue">
-            <strong>8.0 km/h</strong>
+            <strong>{windspeed}</strong>
           </span>
-          , Description:{" "}
+          Description:{" "}
           <span className="blue">
             <strong>Clear Sky</strong>
           </span>
         </p>
       </div>
       <div className="current">
-        <strong>{temperature}</strong> {}
+        {}
+        <strong>{isCelsius ? `${temperatureC}°C` : `${temperatureF}°F`}</strong>
       </div>
-      <div className="current">⛅</div>
+
+      {}
       <div className="current" id="weather-icon">
-        <i
-          className="fas fa-cloud-sun"
-          style={{ fontSize: "100px", color: "orange" }}
-        ></i>
+        {weatherIcon ? (
+          <img
+            src={`https://www.weatherbit.io/static/img/icons/${weatherIcon}.png`}
+            alt="Weather Icon"
+            style={{ width: "100px", height: "100px" }}
+          />
+        ) : (
+          "⛅" 
+        )}
       </div>
     </div>
   );
