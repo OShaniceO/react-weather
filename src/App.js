@@ -34,7 +34,7 @@ function App() {
   const [error, setError] = useState(null);
   const [currentDateTime, setCurrentDateTime] = useState("");
 
-  
+ 
   const formatDateTime = (datetime) => {
     try {
       const fixedDatetime = fixDateTimeFormat(datetime);
@@ -62,7 +62,6 @@ function App() {
       const apiKey = "cac0fb3b4f644470bf1402019e63b59f"; 
       const encodedCity = encodeURIComponent(searchedCity); 
 
-      
       const weatherResponse = await fetch(
         `https://api.weatherbit.io/v2.0/current?city=${encodedCity}&key=${apiKey}&units=M`
       );
@@ -80,12 +79,12 @@ function App() {
         const tempF = Math.round(celsiusToFahrenheit(tempC));
 
         setTemperatureC(tempC); 
-        setTemperatureF(tempF);
+        setTemperatureF(tempF); 
         setHumidity(`${weather.rh}%`);
         setWindspeed(`${weather.wind_spd} m/s`);
         setWeatherIcon(weather.weather.icon); 
 
-       
+        
         const formattedDateTime = formatDateTime(weather.datetime);
         setCurrentDateTime(formattedDateTime);
       } else {
@@ -97,16 +96,15 @@ function App() {
     }
   };
 
-  
+ 
   useEffect(() => {
     fetchWeatherData(city); 
-  }, []); 
+  }, [city]); 
 
-
+  
   const handleCitySearch = (searchedCity) => {
     const formattedCity = capitalizeCityName(searchedCity);
     setCity(formattedCity);
-    fetchWeatherData(formattedCity); 
   };
 
   
