@@ -18,10 +18,8 @@ function CurrentWeather({
       <br />
       <div>
         <p className="main">
-          <strong>{currentDateTime}</strong>{" "}
-          {}
+          <strong>{currentDateTime}</strong>
         </p>
-
         <p className="main-2">
           Humidity:{" "}
           <span className="blue">
@@ -38,11 +36,8 @@ function CurrentWeather({
         </p>
       </div>
       <div className="current">
-        {}
         <strong>{isCelsius ? `${temperatureC}°C` : `${temperatureF}°F`}</strong>
       </div>
-
-      {}
       <div className="current" id="weather-icon">
         {weatherIcon ? (
           <img
@@ -51,7 +46,7 @@ function CurrentWeather({
             style={{ width: "100px", height: "100px" }}
           />
         ) : (
-          "⛅" 
+          "⛅"
         )}
       </div>
     </div>
