@@ -7,32 +7,23 @@ function CurrentWeather({
   isCelsius,
   humidity,
   windspeed,
-  currentDateTime,
   weatherIcon,
+  time,
 }) {
   return (
     <div>
-      <h1 className="bebas-neue-regular">
+      <h1>
         <strong>{city}</strong>
       </h1>
-      <br />
       <div>
-        <p className="main">
-          <strong>{currentDateTime}</strong>
+        <p>
+          <strong>{time}</strong>
         </p>
-        <p className="main-2">
-          Humidity:{" "}
-          <span className="blue">
-            <strong>{humidity}</strong>
-          </span>
-          Wind:{" "}
-          <span className="blue">
-            <strong>{windspeed}</strong>
-          </span>
-          Description:{" "}
-          <span className="blue">
-            <strong>Clear Sky</strong>
-          </span>
+        <p>
+          Humidity: <strong>{humidity}</strong>
+        </p>
+        <p>
+          Wind: <strong>{windspeed}</strong>
         </p>
       </div>
       <div className="current">
@@ -41,7 +32,7 @@ function CurrentWeather({
       <div className="current" id="weather-icon">
         {weatherIcon ? (
           <img
-            src={`https://www.weatherbit.io/static/img/icons/${weatherIcon}.png`}
+            src={weatherIcon}
             alt="Weather Icon"
             style={{ width: "100px", height: "100px" }}
           />

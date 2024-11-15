@@ -11,78 +11,56 @@ const capitalizeCityName = (city) => {
     .join(" ");
 };
 
-const fixDateTimeFormat = (datetime) => {
-  const [date, time] = datetime.split(":");
-  return `${date}T${time}:00:00`;
-};
-
 const celsiusToFahrenheit = (celsius) => {
   return (celsius * 9) / 5 + 32;
 };
 
 function App() {
-  const [city, setCity] = useState(capitalizeCityName("cape town"));
+  const [city, setCity] = useState(capitalizeCityName("Cape Town"));
   const [temperatureC, setTemperatureC] = useState(15);
   const [temperatureF, setTemperatureF] = useState(celsiusToFahrenheit(15));
   const [humidity, setHumidity] = useState("50%");
-  const [windspeed, setWindspeed] = useState("10 km/h");
+  const [windspeed, setWindspeed] = useState("10 m/s");
   const [weatherIcon, setWeatherIcon] = useState("");
+  const [time, setTime] = useState("");
   const [isCelsius, setIsCelsius] = useState(true);
   const [error, setError] = useState(null);
-  const [currentDateTime, setCurrentDateTime] = useState("");
-
-  const formatDateTime = (datetime) => {
-    try {
-      const fixedDatetime = fixDateTimeFormat(datetime);
-      const dateObj = new Date(fixedDatetime);
-      if (isNaN(dateObj.getTime())) {
-        throw new Error("Invalid Date");
-      }
-      return new Intl.DateTimeFormat("en-US", {
-        weekday: "long",
-        hour: "numeric",
-        minute: "numeric",
-        hour12: true,
-      }).format(dateObj);
-    } catch (err) {
-      console.error("Date formatting error:", err);
-      return "Invalid time value";
-    }
-  };
 
   const fetchWeatherData = async (searchedCity) => {
     setError(null);
     try {
-      const apiKey = "cac0fb3b4f644470bf1402019e63b59f";
+      const apiKey = "8e1oeft5a9242f18ee913e0b45ad1a06";
       const encodedCity = encodeURIComponent(searchedCity);
 
-      const weatherResponse = await fetch(
-        `https://api.weatherbit.io/v2.0/current?city=${encodedCity}&key=${apiKey}&units=M`
+      const response = await fetch(
+        `https://api.shecodes.io/weather/v1/current?query=${encodedCity}&key=${apiKey}&units=metric`
       );
 
-      if (!weatherResponse.ok) {
-        setError("Error fetching current weather data");
+      if (!response.ok) {
+        setError("Error fetching current weather data.");
         return;
       }
 
-      const weatherData = await weatherResponse.json();
+      const data = await response.json();
 
-      if (weatherData.data.length > 0) {
-        const weather = weatherData.data[0];
-        const tempC = Math.round(weather.temp);
-        const tempF = Math.round(celsiusToFahrenheit(tempC));
+      setTemperatureC(Math.round(data.temperature.current));
+      setTemperatureF(
+        Math.round(celsiusToFahrenheit(data.temperature.current))
+      );
+      setHumidity(`${data.temperature.humidity}%`);
+      setWindspeed(`${data.wind.speed} m/s`);
+      setWeatherIcon(data.condition.icon_url || "");
 
-        setTemperatureC(tempC);
-        setTemperatureF(tempF);
-        setHumidity(`${weather.rh}%`);
-        setWindspeed(`${weather.wind_spd} m/s`);
-        setWeatherIcon(weather.weather.icon || "");
-
-        const formattedDateTime = formatDateTime(weather.datetime);
-        setCurrentDateTime(formattedDateTime);
-      } else {
-        setError("No data found for the city.");
-      }
+      // Format time with day name
+      const dateObj = new Date(data.time * 1000);
+      const formattedTime = `${dateObj.toLocaleDateString("en-US", {
+        weekday: "long",
+      })}, ${dateObj.toLocaleTimeString("en-US", {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true,
+      })}`;
+      setTime(formattedTime);
     } catch (err) {
       setError("Failed to fetch data. Please try again.");
       console.error("Fetch error:", err);
@@ -116,8 +94,8 @@ function App() {
             isCelsius={isCelsius}
             humidity={humidity}
             windspeed={windspeed}
-            currentDateTime={currentDateTime}
             weatherIcon={weatherIcon}
+            time={time}
           />
         )}
       </div>
