@@ -51,7 +51,7 @@ function App() {
       setWindspeed(`${data.wind.speed} m/s`);
       setWeatherIcon(data.condition.icon_url || "");
 
-      // Format time with day name
+      
       const dateObj = new Date(data.time * 1000);
       const formattedTime = `${dateObj.toLocaleDateString("en-US", {
         weekday: "long",
@@ -107,7 +107,10 @@ function App() {
         <a href="https://www.shecodes.io/">SheCodes</a> and is on{" "}
         <a href="https://github.com/OShaniceO/react-weather">GitHub</a> and
         hosted on{" "}
-        <a href="https://magnificent-taiyaki-c8ee29.netlify.app/">Netlify</a>.
+        <a href="https://app.netlify.com/sites/dancing-arithmetic-ba1c3f/overview">
+          Netlify
+        </a>
+        .
       </footer>
     </div>
   );
