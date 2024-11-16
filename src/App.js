@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./styles.css";
 import SearchBar from "./SearchBar";
 import CurrentWeather from "./CurrentWeather";
+import Forecast from "./Forecast";
 
 const capitalizeCityName = (city) => {
   return city
@@ -25,6 +26,7 @@ function App() {
   const [time, setTime] = useState("");
   const [isCelsius, setIsCelsius] = useState(true);
   const [error, setError] = useState(null);
+  const [forecast, setForecast] = useState([]);
 
   const fetchWeatherData = async (searchedCity) => {
     setError(null);
@@ -32,27 +34,25 @@ function App() {
       const apiKey = "8e1oeft5a9242f18ee913e0b45ad1a06";
       const encodedCity = encodeURIComponent(searchedCity);
 
-      const response = await fetch(
+      const currentWeatherResponse = await fetch(
         `https://api.shecodes.io/weather/v1/current?query=${encodedCity}&key=${apiKey}&units=metric`
       );
 
-      if (!response.ok) {
+      if (!currentWeatherResponse.ok) {
         setError("Error fetching current weather data.");
         return;
       }
 
-      const data = await response.json();
-
-      setTemperatureC(Math.round(data.temperature.current));
+      const currentWeatherData = await currentWeatherResponse.json();
+      setTemperatureC(Math.round(currentWeatherData.temperature.current));
       setTemperatureF(
-        Math.round(celsiusToFahrenheit(data.temperature.current))
+        Math.round(celsiusToFahrenheit(currentWeatherData.temperature.current))
       );
-      setHumidity(`${data.temperature.humidity}%`);
-      setWindspeed(`${data.wind.speed} m/s`);
-      setWeatherIcon(data.condition.icon_url || "");
+      setHumidity(`${currentWeatherData.temperature.humidity}%`);
+      setWindspeed(`${currentWeatherData.wind.speed} m/s`);
+      setWeatherIcon(currentWeatherData.condition.icon_url || "");
 
-      
-      const dateObj = new Date(data.time * 1000);
+      const dateObj = new Date(currentWeatherData.time * 1000);
       const formattedTime = `${dateObj.toLocaleDateString("en-US", {
         weekday: "long",
       })}, ${dateObj.toLocaleTimeString("en-US", {
@@ -61,6 +61,18 @@ function App() {
         hour12: true,
       })}`;
       setTime(formattedTime);
+
+      const forecastResponse = await fetch(
+        `https://api.shecodes.io/weather/v1/forecast?query=${encodedCity}&key=${apiKey}&units=metric`
+      );
+
+      if (!forecastResponse.ok) {
+        setError("Error fetching forecast data.");
+        return;
+      }
+
+      const forecastData = await forecastResponse.json();
+      setForecast(forecastData.daily.slice(1, 6));
     } catch (err) {
       setError("Failed to fetch data. Please try again.");
       console.error("Fetch error:", err);
@@ -87,21 +99,26 @@ function App() {
         {error ? (
           <p className="error-message">{error}</p>
         ) : (
-          <CurrentWeather
-            city={city}
-            temperatureC={temperatureC}
-            temperatureF={temperatureF}
-            isCelsius={isCelsius}
-            humidity={humidity}
-            windspeed={windspeed}
-            weatherIcon={weatherIcon}
-            time={time}
-          />
+          <>
+            <CurrentWeather
+              city={city}
+              temperatureC={temperatureC}
+              temperatureF={temperatureF}
+              isCelsius={isCelsius}
+              humidity={humidity}
+              windspeed={windspeed}
+              weatherIcon={weatherIcon}
+              time={time}
+            />
+            <Forecast forecast={forecast} isCelsius={isCelsius} />
+          </>
         )}
       </div>
-      <button onClick={toggleUnit} style={{ marginTop: "20px" }}>
+      <br/>
+      <button onClick={toggleUnit} className="toggle-unit-button">
         {isCelsius ? "Switch to °F" : "Switch to °C"}
       </button>
+      <br/>
       <footer>
         Coded By Shanice Jones on{" "}
         <a href="https://www.shecodes.io/">SheCodes</a> and is on{" "}
